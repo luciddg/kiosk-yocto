@@ -1,5 +1,4 @@
-# Create an image suited to building Yocto images using the source code
-#  provided in the src/ directory and configuration files.
+# Prepare an image that's ready to have yocto copied onto it and built
 
 FROM phusion/baseimage
 MAINTAINER Brandon Matthews <bmatt@luciddg.com>
