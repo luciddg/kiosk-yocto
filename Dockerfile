@@ -16,6 +16,7 @@ CMD ["/sbin/my_init"]
 WORKDIR /usr/local/src/yocto/
 
 RUN git clone -b dizzy git://git.yoctoproject.org/poky.git
+RUN git clone git://git.yoctoproject.org/meta-web-kiosk
 
 # Copy relevant configuration files
 ADD build/ /usr/local/src/yocto/build/
