@@ -1,0 +1,1 @@
+http://www.elotouch.com/files/drivers/Elo_Linux_MT_USB_Driver_v1.0.0_armv7l.tgz
