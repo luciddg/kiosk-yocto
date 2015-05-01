@@ -1,4 +1,3 @@
-
 Lucid Kiosk sdcard image builder
 ================================
 
@@ -35,7 +34,7 @@ My usual workflow involves interacting with the Docker container directly (ala a
 
 ```bash
 yocto@container $ cd build
-yocto@container $ bitbake -c $updated_layer -f
+yocto@container $ bitbake $updated_layer -c rebuild -f
 yocto@container $ bitbake core-image-web-kiosk
 ```
 
