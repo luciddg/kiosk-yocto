@@ -15,11 +15,11 @@ CMD ["/sbin/my_init"]
 
 WORKDIR /usr/local/src/yocto/
 
-RUN git clone -b dizzy git://git.yoctoproject.org/poky.git
+RUN git clone -b dizzy          http://git.yoctoproject.org/git/poky
 RUN git clone -b read-only-root https://github.com/luciddg/meta-web-kiosk
-RUN git clone -b dizzy git://git.yoctoproject.org/meta-fsl-arm
-RUN git clone -b dizzy git://github.com/Freescale/meta-fsl-arm-extra.git
-RUN git clone git://github.com/luciddg/meta-luciddg-kiosk.git
+RUN git clone -b dizzy          http://git.yoctoproject.org/git/meta-fsl-arm
+RUN git clone -b dizzy          https://github.com/Freescale/meta-fsl-arm-extra
+RUN git clone                   https://github.com/luciddg/meta-luciddg-kiosk.git
 
 # Copy relevant configuration files
 ADD build/ /usr/local/src/yocto/build/
