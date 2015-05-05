@@ -3,7 +3,9 @@
 
 # Because volumes aren't first-class citizens in Dockerfiles,
 #  n.b. that the build script expects a host mount at
-#  /usr/local/share/yocto/
+#   /usr/local/share/yocto/
+# For example,
+#  docker run --rm -ti -v $(readlink -f ./output):/usr/local/share/yocto yocto/cubox:latest /sbin/my_init -- bash -l
 
 FROM yoctoprep-env
 MAINTAINER Brandon Matthews <bmatt@luciddg.com>
