@@ -5,7 +5,10 @@
 #  n.b. that the build script expects a host mount at
 #   /usr/local/share/yocto/
 # For example,
-#  docker run --rm -ti -v $(readlink -f ./output):/usr/local/share/yocto yocto/cubox:latest /sbin/my_init -- bash -l
+#  docker run -d -v $(readlink -f ./output):/usr/local/share/yocto yocto/cubox:latest 
+
+# Provided you do what's above, you'll get a file:
+#  ./output/deploy/images/cubox-i/core-image-web-kiosk-cubox-i.sdcard
 
 FROM yoctoprep-env
 MAINTAINER Brandon Matthews <bmatt@luciddg.com>
@@ -35,3 +38,5 @@ USER root
 RUN chown -R yocto:yocto /usr/local/src/yocto/
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+CMD ["/sbin/my_init", "--", "sudo", "-u", "yocto", "-i", "/usr/local/src/yocto/build-yocto.sh"]
