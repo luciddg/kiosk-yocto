@@ -7,25 +7,22 @@ tl;dr
 Invoke thusly:
 
 ```bash
-$ docker build -t yoctoprep ./env-prep/
-$ docker build -t lucid/kiosk .
-$ docker run --rm -d -v $(readlink -f output/):/usr/local/share/yocto/ lucid/kiosk sudo -u yocto -i /usr/local/src/build-yocto.sh
+$ docker build -t luciddg/kiosk .
+$ docker run --rm -d -v $(readlink -f output/):/usr/local/share/yocto/ luciddg/kiosk
 ```
 
-Building the entire OS will take a long (multi-hour) time, requires ~40 GB of disk space, ~4 GB of RAM and as much processor and disk as you can provide. While it builds, go get some coffee or a soda.
+Building the entire OS will take a long (multi-hour) time, requires ~40 GB of disk space, minimum ~4 GB of RAM and as much processor and disk as you can provide. While it builds, go get some coffee or a soda.
 
 The resultant disk image for the generic x86-64 target is suitable for booting in VirtualBox. Create a VM, attach the disk, boot.
-
-The output image lives in `output/deploy/images/$target/core-image-web-kiosk-$target.sdcard`. Write that directly to your SD card.
 
 About the OS
 ------------
 
-This is a _very_ bare-bones Linux, with a typical embedded mostly-busybox runtime. It has the Midori web browser installed, with the various Xorg supporting bits necessary. It is intended to be retargetable, and indeed there are three branches for the three targets I've used. It boots into runlevel 5, with Midori running in kiosk mode.
+This is a _very_ bare-bones Linux, with a typical embedded mostly-busybox runtime. It has the Midori web browser installed, with the various Xorg supporting bits necessary. It is intended to be retargetable, and indeed there are two branches for the targets I care about. It boots into runlevel 5, with Midori running in kiosk mode.
 
-The root filesystem is mounted read-only! And none of that half-assed aufs shit. This is real, actual read-only root. If you need to write files, you can do it in `/tmp/` and `/var/run/`. Nothing you do there will persist. You cannot write to the SD card without some serious(ly bad) acrobatics.
+The root filesystem is mounted read-only! And none of that half-assed aufs shit. This is real, actual read-only root. If you need to write files, you can do it in `/tmp/` and `/var/run/`. Nothing you do there will persist. You cannot write to persistent storage without some serious(ly bad) acrobatics.
 
-No accounts on this system permit login (that is, all lines in `/etc/shadow` contain `!` or `*`).
+No accounts on this system permit login!
 
 How to develop
 --------------
@@ -54,8 +51,5 @@ Useful links
 TODO
 ----
 
-* Test SSL communications (i.e. do we have root certs?)
-* Make wifi (untested) work (see https://community.freescale.com/thread/324030)
-* Make the mouse pointer go away
 * Write a layer to build the touchscreen kernel module and ship it in the image
 * Turn off `getty` if we're not going to permit interactive accounts
