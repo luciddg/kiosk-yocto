@@ -15,6 +15,8 @@ Building the entire OS will take a long (multi-hour) time, requires ~40 GB of di
 
 The resultant disk image for the generic x86-64 target is suitable for booting in VirtualBox. Create a VM, attach the disk, boot.
 
+**If you want a build an image that will boot on a CuBox**, perform the same steps above, but after checking out the `cubox` branch of this repository.
+
 About the OS
 ------------
 
@@ -27,18 +29,19 @@ No accounts on this system permit login!
 How to develop
 --------------
 
-My usual workflow involves interacting with the Docker container directly (ala a VM) because I'm lazy, and the thing was really intended to be fire-and-forget. Anyway, if you make changes to a layer, you'll need to rebuild that specific layer, and then rebuild.
-
+If you make changes to an external repository (i.e. one included in the `docker build` step), you can either:
 ```bash
-yocto@container $ cd build
-yocto@container $ bitbake $updated_layer -c rebuild -f
-yocto@container $ bitbake core-image-web-kiosk
+$ docker exec -ti $container sudo -u yocto bash -l
+yocto@container$ cd $updated_repo && git pull
+yocto@container$ ./make.sh
 ```
 
-If you're not operating interactively, you need to figure some way to source `poky/oe-init-build-env build` before invoking bitbake. I haven't solved that problem yet.
+Or stash (read: move) the contents of the output directory and rebuild the Docker image. So long as you haven't deleted the contents of the `output/` directory (and put it back once you `docker build`), build times should be minutes and not hours. If you **don't** move the `output/` directory, Docker will try to copy all 40+ GB and thousands of files into the image context and that's bad. So do.
 
-The brute-force option, obviously, is to remove the contents of your output directory, triggering another complete, multi-hour build. Sorry.
+If you *must* log in
+--------------------
 
+Use kpartx to set up your loopback to the sdcard image, mount the root partition, and edit `/etc/shadow`. Burn the image to a microSDcard, boot, connect with a USB serial connection and screen, and log in. This method will persist across reboots (obviously). Don't ship that image.
 
 Useful links
 ------------
